@@ -1,6 +1,6 @@
 import string
 import os
-import time
+from jinja2 import Template
 
 MIN_NAME_LENGTH = 2
 MAX_NAME_LENGTH = 30
@@ -35,7 +35,6 @@ def is_valid_author(author):
 if __name__ == "__main__":
     project_name = input("What is your project name?\n")
 
-
     while not is_valid_project_name(project_name):
         project_name = input("Invalid project name. Try again\n")
 
@@ -54,14 +53,22 @@ if __name__ == "__main__":
         print("Couldn't create directory: ", e)
         exit(0)
 
-    readme = ("#"+project_name+"\n\n##Description\n\nTODO\n\n##How to install the project\n\nTODO\n\n##Author\n"+author)
+    #here we create a string with the contents of the README.md template
+    with open("Templates/README.md.template", 'r') as f:
+        readme_string = f.read()
+
+    #here we turn that string into an instance of the template class, then we render it onto the readme readme_string
+    #with the project name and the author
+    template = Template(readme_string)
+    readme = template.render({'project_name' : project_name, 'author' : author})
 
     #the path of the README.md file is going to be inside the output_dir_path
     readme_output_path = os.path.join(output_dir_path, "README.md")
 
+    #here we create the README.md file and write the readme string into it
     with open(readme_output_path, 'w+') as f:
         f.write(readme)
-    
+
     print("PROJECT DETAILS\n")
     print("Project name: ", project_name)
     print("Author: ", author)
