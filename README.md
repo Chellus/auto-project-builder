@@ -1,10 +1,10 @@
-#Auto builder project
+# Auto builder project
 
-##Description
+## Description
 This is an auto builder for projects. It creates a folder with the project name, a readme file, a TODO file and
 a main.py file
 
-##How to install the project
+## How to install the project
 You will need the jinja2 library. Open command line and run the command:
 ```
 pip install jinja2
@@ -16,4 +16,4 @@ python main.py
 ```
 
 
-Created by: Chellus
+**Created by: Chellus**
