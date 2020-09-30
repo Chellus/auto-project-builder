@@ -53,21 +53,41 @@ if __name__ == "__main__":
         print("Couldn't create directory: ", e)
         exit(0)
 
-    #here we create a string with the contents of the README.md template
+    #here we create a string with the contents of the README.md template, TODO.md template and main.py template
     with open("Templates/README.md.template", 'r') as f:
         readme_string = f.read()
 
+    with open("Templates/TODO.md.template", 'r') as f:
+        todo_string = f.read()
+
+    with open("Templates/main.py.template", 'r') as f:
+        main_string = f.read()
+
     #here we turn that string into an instance of the template class, then we render it onto the readme readme_string
     #with the project name and the author
-    template = Template(readme_string)
-    readme = template.render({'project_name' : project_name, 'author' : author})
+    readme_template = Template(readme_string)
+    readme = readme_template.render({'project_name' : project_name, 'author' : author})
+
+    todo_template = Template(todo_string)
+    todo = todo_template.render({'project_name' : project_name})
+
+    main_template = Template(main_string)
+    main = main_template.render({'project_name' : project_name})
 
     #the path of the README.md file is going to be inside the output_dir_path
     readme_output_path = os.path.join(output_dir_path, "README.md")
+    todo_output_path = os.path.join(output_dir_path, "TODO.md")
+    main_output_path = os.path.join(output_dir_path, "main.py")
 
     #here we create the README.md file and write the readme string into it
     with open(readme_output_path, 'w+') as f:
         f.write(readme)
+
+    with open(todo_output_path, 'w+') as f:
+        f.write(todo)
+
+    with open(main_output_path, 'w+') as f:
+        f.write(main)
 
     print("PROJECT DETAILS\n")
     print("Project name: ", project_name)
